@@ -172,20 +172,22 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = React.useState<State>(memoryState)
+  const [_state, send] = React.useReducer(reducer, {
+    toasts: [],
+  })
 
   React.useEffect(() => {
-    listeners.push(setState)
+    listeners.push(send)
     return () => {
-      const index = listeners.indexOf(setState)
+      const index = listeners.indexOf(send)
       if (index > -1) {
         listeners.splice(index, 1)
       }
     }
-  }, [state])
+  }, [send])
 
   return {
-    ...state,
+    ..._state,
     toast,
     dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
   }

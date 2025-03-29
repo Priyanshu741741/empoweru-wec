@@ -1,2 +1,0 @@
-nodejs-16.x
-python-3.9 

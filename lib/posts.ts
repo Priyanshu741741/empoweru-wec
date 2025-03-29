@@ -363,3 +363,11 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
+export async function updatePost(id: string, data: Partial<Post>): Promise<Post> {
+  // ... existing code ...
+}
+
+export async function deletePost(id: string): Promise<Post> {
+  // ... existing code ...
+}
+

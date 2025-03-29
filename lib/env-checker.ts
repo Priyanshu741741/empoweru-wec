@@ -1,5 +1,6 @@
 // Client-side environment variable checker
 import React from 'react'
+import type { actionTypes } from './types'
 
 // Check if running in browser environment
 export function checkEnvironmentVariables(): { 

@@ -10,7 +10,7 @@
     "create-admin-user": "node scripts/createAdminUser.js"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18.x"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
