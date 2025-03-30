@@ -39,7 +39,7 @@ export default async function AboutPage() {
             <div className="relative h-[400px] rounded-2xl overflow-hidden">
               <Image
                 src="/wec-1.jpg"
-                alt="Women at a community event"
+                alt="At a community event"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -50,8 +50,8 @@ export default async function AboutPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
             <div className="order-2 md:order-1 relative h-[400px] rounded-2xl overflow-hidden">
               <Image
-                src="/wec-1.jpg"
-                alt="Women in a workshop"
+                src="/wec4.jpg"
+                alt="Ethnic wear"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"

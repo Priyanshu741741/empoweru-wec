@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import FloatingBubblesBackground from "@/components/floating-bubbles"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 export default function IntroPage() {
   const router = useRouter()
@@ -32,7 +33,7 @@ export default function IntroPage() {
           transition={{ delay: 1.5, duration: 1 }}
           className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto text-gray-700 dark:text-gray-300"
         >
-          Stories, resources, and community to inspire and empower women around the world.
+          Stories, resources and community to inspire and empower people around the world.
         </motion.p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Button
