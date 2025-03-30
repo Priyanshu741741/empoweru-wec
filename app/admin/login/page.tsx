@@ -124,9 +124,7 @@ export default function AdminLoginPage() {
           </CardContent>
         </Card>
         
-        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-          <p>Use admin / password for demo access</p>
-        </div>
+        
       </div>
     </div>
   )
