@@ -7,8 +7,8 @@ type RouterLike = {
 }
 
 export const TOKEN_EXPIRY = 24 * 60 * 60 * 1000 // 24 hours
-export const ADMIN_USERNAME = "admin"
-export const ADMIN_PASSWORD = "password"
+export const ADMIN_USERNAME = "Wec@Pec@EmpowerU"
+export const ADMIN_PASSWORD = "Wec@Pec@EmpowerU@777"
 
 export function createAdminToken(): string {
   // Create a token with expiry

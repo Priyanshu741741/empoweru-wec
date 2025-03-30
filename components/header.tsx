@@ -13,7 +13,6 @@ const navItems = [
   { name: "Home", path: "/" },
   { name: "Blog", path: "/blog" },
   { name: "About", path: "/about" },
-  { name: "Admin", path: "/admin" },
 ]
 
 export default function Header() {
@@ -73,6 +72,13 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center space-x-2">
+            <Link
+              href="/admin"
+              className="px-4 py-2 rounded-md text-md md:text-lg font-medium transition-colors text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+              aria-label="Admin"
+            >
+              •••
+            </Link>
             <ThemeToggle />
 
             <Button
@@ -114,10 +120,20 @@ export default function Header() {
                 />
                 EmpowerU
               </Link>
-              <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
-                <X className="h-6 w-6" />
-                <span className="sr-only">Close menu</span>
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Link
+                  href="/admin"
+                  className="px-2 py-2 rounded-md text-md text-lg font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Admin"
+                >
+                  •••
+                </Link>
+                <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
+                  <X className="h-6 w-6" />
+                  <span className="sr-only">Close menu</span>
+                </Button>
+              </div>
             </div>
 
             <nav className="flex flex-col p-4">

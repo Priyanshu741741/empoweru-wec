@@ -16,6 +16,7 @@ import { toast } from "@/hooks/use-toast"
 import { ArrowLeft, Upload, Loader2 } from "lucide-react"
 import { Editor } from "@/components/editor"
 import { isAdminAuthenticated } from "@/lib/admin-auth"
+import { markdownToHtml } from "@/lib/markdown"
 
 export default function AdminEditPostPage({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -184,7 +185,7 @@ export default function AdminEditPostPage({ params }: { params: { id: string } }
         .update({
           title,
           excerpt,
-          content,
+          content: markdownToHtml(content),
           category,
           cover_image: imageUrl,
           author_id: authorId,
@@ -348,7 +349,7 @@ export default function AdminEditPostPage({ params }: { params: { id: string } }
                   <Card>
                     <CardContent className="p-4 prose dark:prose-invert max-w-none">
                       {content ? (
-                        <div dangerouslySetInnerHTML={{ __html: content }} />
+                        <div dangerouslySetInnerHTML={{ __html: markdownToHtml(content) }} />
                       ) : (
                         <p className="text-gray-500">Nothing to preview.</p>
                       )}

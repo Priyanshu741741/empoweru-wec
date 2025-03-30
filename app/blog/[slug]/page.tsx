@@ -67,8 +67,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </div>
 
             <div
-              className="prose prose-lg dark:prose-invert max-w-none mb-16"
+              className="prose prose-lg dark:prose-invert max-w-none mb-16 whitespace-pre-wrap"
               dangerouslySetInnerHTML={{ __html: post.content }}
+              style={{ whiteSpace: 'pre-wrap' }}
             />
 
             <div className="border-t border-gray-200 dark:border-gray-800 pt-8 mb-16">
