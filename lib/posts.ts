@@ -1,8 +1,7 @@
 import type { Post } from "./types"
 import { supabase } from "./supabase"
 
-// Mock data for posts, used as fallback if Supabase connection fails
-const mockPosts: Post[] = [
+export const mockPosts: Post[] = [
   {
     id: "1",
     title: "Breaking the Glass Ceiling: Women Leaders in Tech",
@@ -166,208 +165,161 @@ const mockPosts: Post[] = [
 
 export async function getPosts(): Promise<Post[]> {
   try {
-    // Fetch published posts from Supabase
     const { data, error } = await supabase
-      .from("posts")
+      .from('posts')
       .select(`
         id,
         title,
         slug,
         excerpt,
         content,
-        cover_image,
-        created_at,
         category,
-        users (
-          id,
-          full_name,
-          role,
-          bio,
-          avatar_url
-        )
+        featured,
+        created_at,
+        users (full_name, avatar_url)
       `)
-      .eq("status", "published")
-      .order("created_at", { ascending: false })
+      .eq('status', 'published')
+      .order('created_at', { ascending: false })
 
-    if (error) {
-      console.error("Error fetching posts:", error)
-      return mockPosts // Return mock data as fallback
+    if (error) throw error
+
+    if (!data || data.length === 0) {
+      return mockPosts
     }
 
-    // Transform data to match the Post type
-    const posts: Post[] = data.map((post: any) => ({
+    return data.map(post => ({
       id: post.id,
       title: post.title,
-      slug: post.slug || slugify(post.title),
-      excerpt: post.excerpt || `${post.content.substring(0, 150)}...`,
+      slug: post.slug,
+      excerpt: post.excerpt,
       content: post.content,
-      coverImage: post.cover_image || "/placeholder.svg?height=600&width=800",
-      date: new Date(post.created_at).toISOString().split("T")[0],
-      readingTime: calculateReadingTime(post.content),
-      category: post.category || "general",
-      authors: [
-        {
-          id: post.users?.id || "anonymous",
-          name: post.users?.full_name || "Anonymous Author",
-          role: post.users?.role || "Writer",
-          bio: post.users?.bio || "Community contributor",
-          avatar: post.users?.avatar_url || "/placeholder.svg?height=100&width=100",
-        },
-      ],
+      author: post.users.full_name,
+      authorAvatar: post.users.avatar_url,
+      category: post.category,
+      tags: [],
+      coverImage: '/placeholder.jpg',
+      featured: post.featured,
+      publishedAt: new Date(post.created_at).toISOString(),
+      readingTime: '5 min read'
     }))
-
-    return posts
-  } catch (err) {
-    console.error("Error in getPosts:", err)
-    return mockPosts // Return mock data as fallback
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    return mockPosts
   }
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | undefined> {
+export async function getPostBySlug(slug: string): Promise<Post | null> {
   try {
-    // Fetch a specific post by slug
     const { data, error } = await supabase
-      .from("posts")
+      .from('posts')
       .select(`
         id,
         title,
         slug,
         excerpt,
         content,
-        cover_image,
-        created_at,
         category,
-        users (
-          id,
-          full_name,
-          role,
-          bio,
-          avatar_url
-        )
+        featured,
+        created_at,
+        users (full_name, avatar_url)
       `)
-      .eq("slug", slug)
-      .eq("status", "published")
+      .eq('slug', slug)
+      .eq('status', 'published')
       .single()
 
-    if (error || !data) {
-      console.error("Error fetching post by slug:", error)
-      // Look in mock data
-      return mockPosts.find((post) => post.slug === slug)
+    if (error) throw error
+
+    if (!data) {
+      const mockPost = mockPosts.find(post => post.slug === slug)
+      return mockPost || null
     }
 
-    // Transform data to match the Post type
-    const post: Post = {
+    return {
       id: data.id,
       title: data.title,
-      slug: data.slug || slugify(data.title),
-      excerpt: data.excerpt || `${data.content.substring(0, 150)}...`,
+      slug: data.slug,
+      excerpt: data.excerpt,
       content: data.content,
-      coverImage: data.cover_image || "/placeholder.svg?height=600&width=800",
-      date: new Date(data.created_at).toISOString().split("T")[0],
-      readingTime: calculateReadingTime(data.content),
-      category: data.category || "general",
-      authors: [
-        {
-          id: data.users?.id || "anonymous",
-          name: data.users?.full_name || "Anonymous Author",
-          role: data.users?.role || "Writer",
-          bio: data.users?.bio || "Community contributor",
-          avatar: data.users?.avatar_url || "/placeholder.svg?height=100&width=100",
-        },
-      ],
+      author: data.users.full_name,
+      authorAvatar: data.users.avatar_url,
+      category: data.category,
+      tags: [],
+      coverImage: '/placeholder.jpg',
+      featured: data.featured,
+      publishedAt: new Date(data.created_at).toISOString(),
+      readingTime: '5 min read'
     }
-
-    return post
-  } catch (err) {
-    console.error("Error in getPostBySlug:", err)
-    return mockPosts.find((post) => post.slug === slug) // Return from mock data as fallback
+  } catch (error) {
+    console.error('Error fetching post:', error)
+    const mockPost = mockPosts.find(post => post.slug === slug)
+    return mockPost || null
   }
 }
 
-export async function getRelatedPosts(currentPostId: string, category: string): Promise<Post[]> {
+export async function getRelatedPosts(currentPost: Post): Promise<Post[]> {
   try {
-    // Fetch related posts from Supabase
     const { data, error } = await supabase
-      .from("posts")
+      .from('posts')
       .select(`
         id,
         title,
         slug,
         excerpt,
-        content,
-        cover_image,
-        created_at,
         category,
-        users (
-          id,
-          full_name,
-          role,
-          bio,
-          avatar_url
-        )
+        featured,
+        created_at,
+        users (full_name, avatar_url)
       `)
-      .eq("status", "published")
-      .eq("category", category)
-      .neq("id", currentPostId)
-      .order("created_at", { ascending: false })
+      .eq('status', 'published')
+      .eq('category', currentPost.category)
+      .neq('id', currentPost.id)
       .limit(3)
 
-    if (error) {
-      console.error("Error fetching related posts:", error)
-      // Return related posts from mock data as fallback
-      return mockPosts.filter((post) => post.id !== currentPostId && post.category === category).slice(0, 3)
+    if (error) throw error
+
+    if (!data || data.length === 0) {
+      return mockPosts.filter(post => 
+        post.category === currentPost.category && 
+        post.id !== currentPost.id
+      ).slice(0, 3)
     }
 
-    // Transform data to match the Post type
-    const posts: Post[] = data.map((post: any) => ({
+    return data.map(post => ({
       id: post.id,
       title: post.title,
-      slug: post.slug || slugify(post.title),
-      excerpt: post.excerpt || `${post.content.substring(0, 150)}...`,
-      content: post.content,
-      coverImage: post.cover_image || "/placeholder.svg?height=600&width=800",
-      date: new Date(post.created_at).toISOString().split("T")[0],
-      readingTime: calculateReadingTime(post.content),
-      category: post.category || "general",
-      authors: [
-        {
-          id: post.users?.id || "anonymous",
-          name: post.users?.full_name || "Anonymous Author",
-          role: post.users?.role || "Writer",
-          bio: post.users?.bio || "Community contributor",
-          avatar: post.users?.avatar_url || "/placeholder.svg?height=100&width=100",
-        },
-      ],
+      slug: post.slug,
+      excerpt: post.excerpt,
+      content: '',
+      author: post.users.full_name,
+      authorAvatar: post.users.avatar_url,
+      category: post.category,
+      tags: [],
+      coverImage: '/placeholder.jpg',
+      featured: post.featured,
+      publishedAt: new Date(post.created_at).toISOString(),
+      readingTime: '5 min read'
     }))
-
-    return posts
-  } catch (err) {
-    console.error("Error in getRelatedPosts:", err)
-    // Return related posts from mock data as fallback
-    return mockPosts.filter((post) => post.id !== currentPostId && post.category === category).slice(0, 3)
+  } catch (error) {
+    console.error('Error fetching related posts:', error)
+    return mockPosts.filter(post => 
+      post.category === currentPost.category && 
+      post.id !== currentPost.id
+    ).slice(0, 3)
   }
 }
 
-// Utility functions
-function calculateReadingTime(content: string): number {
+export function formatDate(date: string): string {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
+export function calculateReadingTime(content: string): string {
   const wordsPerMinute = 200
-  const wordCount = content.trim().split(/\s+/).length
-  return Math.ceil(wordCount / wordsPerMinute)
-}
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
-
-export async function updatePost(id: string, data: Partial<Post>): Promise<Post> {
-  // ... existing code ...
-}
-
-export async function deletePost(id: string): Promise<Post> {
-  // ... existing code ...
+  const words = content.trim().split(/\s+/).length
+  const minutes = Math.ceil(words / wordsPerMinute)
+  return `${minutes} min read`
 }
 

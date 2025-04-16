@@ -77,7 +77,7 @@ export default function AdminUsersPage() {
     fetchUsers()
   }, [router])
 
-  // Filter users based on search query
+ 
   const filteredUsers = users.filter(user => 
     (user.full_name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
     (user.email || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -137,7 +137,7 @@ export default function AdminUsersPage() {
         return
       }
       
-      // Update user role in the local state
+   
       setUsers(users.map(user => 
         user.id === id ? { ...user, role: 'admin' } : user
       ))
@@ -173,7 +173,7 @@ export default function AdminUsersPage() {
         return
       }
       
-      // Update user role in the local state
+     
       setUsers(users.map(user => 
         user.id === id ? { ...user, role: 'writer' } : user
       ))

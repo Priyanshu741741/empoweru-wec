@@ -17,15 +17,12 @@ export default function AdminLoginPage() {
   const [loginError, setLoginError] = useState("")
 
   useEffect(() => {
-    // Check if we're running on the client
     if (typeof window === 'undefined') {
       return;
     }
 
-    // Debug log - showing we're on the login page
     console.log("Admin login page loaded");
 
-    // Check if already authenticated
     const checkAuth = () => {
       try {
         if (isAdminAuthenticated()) {
@@ -45,7 +42,6 @@ export default function AdminLoginPage() {
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Simple authentication - in production, use proper auth with API
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
       try {
         createAdminToken();
@@ -123,9 +119,7 @@ export default function AdminLoginPage() {
             </form>
           </CardContent>
         </Card>
-        
-        
       </div>
     </div>
   )
-} 
+}

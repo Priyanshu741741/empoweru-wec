@@ -1,78 +1,59 @@
-import type { TeamMember } from "./types"
+export interface TeamMember {
+  id: string
+  name: string
+  role: string
+  bio: string
+  imageUrl: string
+  socialLinks: {
+    twitter?: string
+    linkedin?: string
+    github?: string
+  }
+}
 
-// Mock data for team members
-const teamMembers: TeamMember[] = [
+export const teamMembers: TeamMember[] = [
   {
-    id: "1",
-    name: "Sarah Johnson",
-    role: "Founder & President",
-    bio: "Sarah founded Empower Her with a vision to create a supportive community for women from all walks of life.",
-    avatar: "/placeholder.svg?height=400&width=300",
+    id: '1',
+    name: 'John Doe',
+    role: 'Founder & CEO',
+    bio: 'John has over 15 years of experience in technology and entrepreneurship.',
+    imageUrl: '/images/team/john-doe.jpg',
     socialLinks: {
-      facebook: "https://facebook.com",
-      twitter: "https://twitter.com",
-      linkedin: "https://linkedin.com",
-    },
+      twitter: 'https://twitter.com/johndoe',
+      linkedin: 'https://linkedin.com/in/johndoe',
+      github: 'https://github.com/johndoe'
+    }
   },
   {
-    id: "2",
-    name: "Maya Rodriguez",
-    role: "Vice President",
-    bio: "Maya brings her experience in community organizing to help expand our club's reach and impact.",
-    avatar: "/placeholder.svg?height=400&width=300",
+    id: '2',
+    name: 'Jane Smith',
+    role: 'CTO',
+    bio: 'Jane is a full-stack developer with expertise in React and Node.js.',
+    imageUrl: '/images/team/jane-smith.jpg',
     socialLinks: {
-      twitter: "https://twitter.com",
-      linkedin: "https://linkedin.com",
-    },
+      twitter: 'https://twitter.com/janesmith',
+      linkedin: 'https://linkedin.com/in/janesmith',
+      github: 'https://github.com/janesmith'
+    }
   },
   {
-    id: "3",
-    name: "Jessica Chen",
-    role: "Content Director",
-    bio: "Jessica oversees our blog and ensures we share diverse and empowering stories from our community.",
-    avatar: "/placeholder.svg?height=400&width=300",
+    id: '3',
+    name: 'Mike Johnson',
+    role: 'Lead Designer',
+    bio: 'Mike specializes in UI/UX design and brand identity.',
+    imageUrl: '/images/team/mike-johnson.jpg',
     socialLinks: {
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com",
-    },
-  },
-  {
-    id: "4",
-    name: "Amina Hassan",
-    role: "Events Coordinator",
-    bio: "Amina organizes our workshops, networking events, and annual conference with creativity and precision.",
-    avatar: "/placeholder.svg?height=400&width=300",
-    socialLinks: {
-      twitter: "https://twitter.com",
-      linkedin: "https://linkedin.com",
-    },
-  },
-  {
-    id: "5",
-    name: "Olivia Taylor",
-    role: "Mentorship Program Lead",
-    bio: "Olivia connects mentors and mentees, creating valuable relationships that help women advance in their careers.",
-    avatar: "/placeholder.svg?height=400&width=300",
-    socialLinks: {
-      facebook: "https://facebook.com",
-      linkedin: "https://linkedin.com",
-    },
-  },
-  {
-    id: "6",
-    name: "Priya Patel",
-    role: "Outreach Coordinator",
-    bio: "Priya builds partnerships with organizations that share our mission of empowering women in our community.",
-    avatar: "/placeholder.svg?height=400&width=300",
-    socialLinks: {
-      twitter: "https://twitter.com",
-      linkedin: "https://linkedin.com",
-    },
-  },
+      twitter: 'https://twitter.com/mikejohnson',
+      linkedin: 'https://linkedin.com/in/mikejohnson'
+    }
+  }
 ]
 
-export async function getTeamMembers(): Promise<TeamMember[]> {
-  // In a real app, this would fetch from a database or API
+export function getTeamMembers(): TeamMember[] {
   return teamMembers
+}
+
+export function getTeamMember(id: string): TeamMember | undefined {
+  return teamMembers.find(member => member.id === id)
 }
 

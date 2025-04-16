@@ -71,14 +71,12 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
 
   useEffect(() => {
-    // Check if we're running on the client
     if (typeof window === 'undefined') {
       return;
     }
     
     console.log("Admin dashboard - Client side mount");
     
-    // Check authentication
     const checkAuth = async () => {
       try {
         console.log("Checking auth status...");
@@ -92,7 +90,6 @@ export default function AdminDashboard() {
         }
         
         setIsAuthenticated(true);
-        // Continue with dashboard data loading
         console.log("Loading dashboard data...");
         await fetchDashboardData();
       } catch (error) {
@@ -108,7 +105,6 @@ export default function AdminDashboard() {
     try {
       setIsLoading(true);
       
-      // Check Supabase connection
       console.log("Testing Supabase connection...")
       const connectionTest = await supabase
         .from('posts')
@@ -125,35 +121,29 @@ export default function AdminDashboard() {
         return
       }
       
-      // Fetch total posts count
       const { count: totalPosts, error: totalError } = await supabase
         .from('posts')
         .select('*', { count: 'exact', head: true })
       
-      // Fetch published posts count
       const { count: publishedPosts, error: publishedError } = await supabase
         .from('posts')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'published')
       
-      // Fetch pending posts count
       const { count: pendingPosts, error: pendingError } = await supabase
         .from('posts')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'pending')
       
-      // Fetch total users count
       const { count: totalUsers, error: usersError } = await supabase
         .from('users')
         .select('*', { count: 'exact', head: true })
       
-      // Fetch writers count
       const { count: writers, error: writersError } = await supabase
         .from('users')
         .select('*', { count: 'exact', head: true })
         .eq('role', 'writer')
       
-      // Fetch 5 most recent posts
       const { data: recentPostsData, error: recentError } = await supabase
         .from('posts')
         .select(`
@@ -169,7 +159,6 @@ export default function AdminDashboard() {
         .order('created_at', { ascending: false })
         .limit(5)
       
-      // Fetch 5 most recent users
       const { data: recentUsersData, error: recentUsersError } = await supabase
         .from('users')
         .select(`
@@ -504,4 +493,4 @@ export default function AdminDashboard() {
       </Tabs>
     </div>
   )
-} 
+}

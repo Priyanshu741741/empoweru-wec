@@ -18,22 +18,18 @@ export default function AdminSettingsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState("general")
   
-  // General settings
   const [siteName, setSiteName] = useState("EmpowerU")
   const [siteUrl, setSiteUrl] = useState("https://empoweru.vercel.app")
   const [adminEmail, setAdminEmail] = useState("admin@empoweru.com")
   
-  // Content settings
   const [commentsEnabled, setCommentsEnabled] = useState(true)
   const [moderationEnabled, setModerationEnabled] = useState(true)
   const [maxPostsPerPage, setMaxPostsPerPage] = useState("10")
   
-  // API settings
   const [apiKey, setApiKey] = useState("sk_test_••••••••••••••••••••••••••")
   const [webhookUrl, setWebhookUrl] = useState("")
   
   useEffect(() => {
-    // Check authentication
     if (!isAdminAuthenticated(router)) {
       return
     }
@@ -49,7 +45,6 @@ export default function AdminSettingsPage() {
   }
   
   const handleGenerateApiKey = () => {
-    // In a real app, we would call an API to generate a new key
     setApiKey("sk_live_" + Math.random().toString(36).substring(2, 15))
     toast({
       title: "API Key Generated",
@@ -213,58 +208,31 @@ export default function AdminSettingsPage() {
               <div className="space-y-2">
                 <Label htmlFor="api-key">API Key</Label>
                 <div className="flex space-x-2">
-                  <Input 
-                    id="api-key" 
-                    value={apiKey} 
-                    onChange={(e) => setApiKey(e.target.value)} 
+                  <Input
+                    id="api-key"
+                    value={apiKey}
+                    readOnly
                     type="password"
-                    className="flex-1"
                   />
-                  <Button onClick={handleGenerateApiKey}>Generate</Button>
+                  <Button onClick={handleGenerateApiKey}>Generate New Key</Button>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Your API key is used to authenticate API requests.
-                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="webhook-url">Webhook URL</Label>
-                <Input 
-                  id="webhook-url" 
-                  value={webhookUrl} 
-                  onChange={(e) => setWebhookUrl(e.target.value)} 
-                  placeholder="https://your-site.com/api/webhook"
+                <Input
+                  id="webhook-url"
+                  value={webhookUrl}
+                  onChange={(e) => setWebhookUrl(e.target.value)}
+                  placeholder="https://"
                 />
-                <p className="text-sm text-muted-foreground">
-                  URL to receive webhook notifications.
-                </p>
               </div>
             </CardContent>
             <CardFooter>
               <Button onClick={() => handleSaveSettings("API")}>Save Changes</Button>
             </CardFooter>
           </Card>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>API Documentation</CardTitle>
-              <CardDescription>Access documentation for the API.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                Comprehensive documentation for the API endpoints, authentication, and usage examples.
-              </p>
-              <Button variant="outline" className="w-full" onClick={() => 
-                toast({
-                  title: "API Documentation",
-                  description: "Documentation not available in demo mode."
-                })
-              }>
-                View Documentation
-              </Button>
-            </CardContent>
-          </Card>
         </TabsContent>
       </Tabs>
     </div>
   )
-} 
+}

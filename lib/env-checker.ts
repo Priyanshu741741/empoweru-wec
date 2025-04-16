@@ -1,3 +1,39 @@
+export function checkRequiredEnvVars() {
+  if (typeof window === 'undefined') return
+  
+  const requiredVars = [
+    'NEXT_PUBLIC_SUPABASE_URL',
+    'NEXT_PUBLIC_SUPABASE_ANON_KEY'
+  ]
+  
+  const missingVars = requiredVars.filter(varName => !process.env[varName])
+  
+  if (missingVars.length > 0) {
+    console.error(`Missing required environment variables: ${missingVars.join(', ')}`)
+    return false
+  }
+  
+  return true
+}
+
+export function logEnvVars() {
+  if (typeof window === 'undefined') return
+  
+  const envVars = {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  }
+  
+  console.log('Environment Variables:', envVars)
+}
+
+export function useEnvChecker() {
+  if (typeof window === 'undefined') return
+  
+  checkRequiredEnvVars()
+  logEnvVars()
+}
+
 // Client-side environment variable checker
 import React from 'react'
 import type { actionTypes } from './types'
@@ -58,4 +94,4 @@ export function EnvErrorDisplay(): React.ReactElement | null {
       </p>
     </div>
   )
-} 
+}
