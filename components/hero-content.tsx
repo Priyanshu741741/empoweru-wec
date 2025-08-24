@@ -25,6 +25,17 @@ export default function HeroContent() {
             Explore
           </GlowButton>
         </div>
+        
+        {/* Crossword Button */}
+        <div className="flex justify-center mt-6">
+          <GlowButton 
+            variant="outline" 
+            onClick={() => window.location.href = '/crossword'}
+            className="instrument text-lg px-8 py-2"
+          >
+            Play Crossword
+          </GlowButton>
+        </div>
       </div>
     </main>
   )

@@ -20,6 +20,7 @@ export default function Header() {
   const navigationItems = [
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
+    { href: "/crossword", label: "Crossword" },
     { href: "/about", label: "About" },
     { href: "/admin", label: "Admin" },
   ]
@@ -29,11 +30,13 @@ export default function Header() {
       <header className="relative z-50 flex items-center justify-between pt-3 px-4">
         {/* Logo */}
         <div className="flex items-center">
-          <img
-            src="/WEC-logo.png"
-            alt="Women Empowerment Cell Logo"
-            className="h-16 w-auto"
-          />
+          <a href="/" className="cursor-pointer">
+            <img
+              src="/WEC-logo.png"
+              alt="Women Empowerment Cell Logo"
+              className="h-16 w-auto"
+            />
+          </a>
         </div>
 
         {/* About Link and Mobile Menu */}
@@ -90,11 +93,13 @@ export default function Header() {
     <header className="relative z-50 flex items-start justify-between pt-3 px-3">
       {/* Logo */}
       <div className="flex items-center ml-2">
-        <img
-          src="/WEC-logo.png"
-          alt="Women Empowerment Cell Logo"
-          className="h-20 w-auto"
-        />
+        <a href="/" className="cursor-pointer">
+          <img
+            src="/WEC-logo.png"
+            alt="Women Empowerment Cell Logo"
+            className="h-20 w-auto"
+          />
+        </a>
       </div>
 
       {/* Navigation */}
