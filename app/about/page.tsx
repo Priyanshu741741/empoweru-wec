@@ -25,7 +25,20 @@ export default function AboutPage() {
           {/* Our Mission Section */}
           <div className="mb-20">
             <div className="grid lg:grid-cols-2 gap-16 xl:gap-20 items-center">
-              <div className="space-y-6">
+              {/* Photo - Shows first on mobile, second on desktop */}
+              <div className="relative order-1 lg:order-2">
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl h-80 lg:h-96">
+                  <Image
+                    src="/wec-about-2.jpg"
+                    alt="Women empowerment activities"
+                    width={800}
+                    height={600}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </div>
+              {/* Text - Shows second on mobile, first on desktop */}
+              <div className="space-y-6 order-2 lg:order-1">
                 <h2 className="text-3xl md:text-4xl font-medium text-white mb-6 instrument italic">
                   Our Mission
                 </h2>
@@ -38,17 +51,6 @@ export default function AboutPage() {
                 <p className="text-lg text-white/90 leading-relaxed poppins">
                   Through our blog, events, and initiatives, we aim to inspire and uplift women from all walks of life, celebrating their achievements and advocating for gender equality.
                 </p>
-              </div>
-              <div className="relative">
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl h-80 lg:h-96">
-                  <Image
-                    src="/wec-about-2.jpg"
-                    alt="Women empowerment activities"
-                    width={800}
-                    height={600}
-                    className="w-full h-full object-cover object-center"
-                  />
-                </div>
               </div>
             </div>
           </div>

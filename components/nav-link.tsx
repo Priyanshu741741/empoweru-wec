@@ -7,9 +7,10 @@ interface NavLinkProps {
   children: React.ReactNode
   href: string
   className?: string
+  onClick?: () => void
 }
 
-export default function NavLink({ children, href, className = "" }: NavLinkProps) {
+export default function NavLink({ children, href, className = "", onClick }: NavLinkProps) {
   const [isHovered, setIsHovered] = useState(false)
   
   return (
@@ -22,6 +23,7 @@ export default function NavLink({ children, href, className = "" }: NavLinkProps
       `}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
       style={{
         pointerEvents: 'auto'
       }}

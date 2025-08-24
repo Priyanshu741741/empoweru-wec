@@ -116,17 +116,17 @@ export default function AdminPage() {
       <ShaderBackground>
         <Header />
         <PulsingCircle />
-        <div className="relative z-20 min-h-screen pt-32 pb-16 flex items-center justify-center">
-          <Card className="w-full max-w-md bg-white/10 border-white/20">
-            <CardHeader>
-              <CardTitle className="text-white text-center text-2xl font-instrument-serif">
+        <div className="relative z-20 min-h-screen pt-32 pb-16 flex items-center justify-center px-4">
+          <Card className="w-full max-w-sm mx-auto bg-white/10 border-white/20 backdrop-blur-md shadow-2xl">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-white text-center text-2xl instrument">
                 Admin Login
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-6 pb-6">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-white font-instrument-serif">
+                  <Label htmlFor="email" className="text-white instrument">
                     Email
                   </Label>
                   <Input
@@ -135,12 +135,12 @@ export default function AdminPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="bg-white/10 border-white/30 text-white placeholder:text-white/60 font-instrument-serif"
+                    className="bg-white/10 border-white/30 text-white placeholder:text-white/60 instrument focus:border-white/50 transition-colors"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-white font-instrument-serif">
+                  <Label htmlFor="password" className="text-white instrument">
                     Password
                   </Label>
                   <Input
@@ -149,14 +149,14 @@ export default function AdminPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="bg-white/10 border-white/30 text-white placeholder:text-white/60 font-instrument-serif"
+                    className="bg-white/10 border-white/30 text-white placeholder:text-white/60 instrument focus:border-white/50 transition-colors"
                     required
                   />
                 </div>
                 <Button
                   type="submit"
                   disabled={authenticating}
-                  className="w-full bg-white text-black hover:bg-white/90 font-instrument-serif"
+                  className="w-full bg-white text-black hover:bg-white/90 instrument font-medium transition-all duration-300 hover:shadow-lg"
                 >
                   {authenticating ? 'Logging in...' : 'Login'}
                 </Button>
